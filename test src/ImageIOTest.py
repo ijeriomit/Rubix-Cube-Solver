@@ -5,7 +5,7 @@ from src.ImageIO import ImageIO
 class ImageIOTest(unittest.TestCase):
 
     def test_loadImage(self):
-        self.assertNotEqual(ImageIO.loadImages(), n)
+        self.assertNotEqual(ImageIO.loadImages("1",".jpg"), None)
 
     def test_FileTypeIsValid(self):
         self.assertTrue(ImageIO.checkValidImageFormat(".jpg"))

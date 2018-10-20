@@ -2,17 +2,20 @@ from PIL import Image
 import os
 
 class ImageIO:
+
     valid_types = [".jpg", ".gif", ".png", ".tga"]
 
     @classmethod
     def loadImages(cls, side, filetype):
-
         if not cls.checkValidImageFormat(filetype):
             print("INVALID FILE TYPE")
-        path = "C:/Users/Ijeri/Documents/PycharmProjects/Rubix-Cube/Cube_1/Side_"+side+filetype
-        if os.path.exists(path):
-            print("true")
-        img = Image.open(path,'r')
+        path = "C:/Users/Ijeri/Documents/PycharmProjects/Rubix-Cube/Cube_1/Side " + side + filetype
+        try:
+            img = Image.open(path,'r')
+        except FileNotFoundError:
+            print("FileNotFound")
+        #img.format = "PNG"
+        #img.show()
         return img
 
     @classmethod

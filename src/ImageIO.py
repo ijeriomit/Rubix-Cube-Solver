@@ -14,6 +14,7 @@ class ImageIO:
             img = Image.open(path,'r')
         except FileNotFoundError:
             print("FileNotFound")
+            return None
         #img.format = "PNG"
         #img.show()
         return img

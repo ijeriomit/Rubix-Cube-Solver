@@ -11,8 +11,12 @@ class ImageIO:
             img = cv2.imread(cls.path, 1)
             if img is None:
                 print("File I/O Error")
+               # cv2.imshow("Cube Face",img)
+               # cv2.waitKey(0)
+                #cv2.destroyAllWindows()
             return img
         print("INVALID FILE TYPE")
+
     @classmethod
     def checkValidImageFormat(cls,filetype):
 

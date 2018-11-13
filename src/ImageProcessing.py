@@ -1,14 +1,15 @@
+import random
 import numpy as np
 import cv2
+
+
+def displayImage(windowname, image):
+    cv2.imshow(windowname, image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 class ImageProcessing:
-
-
-
-    @classmethod
-    def displayImage(cls, windowname, image):
-        cv2.imshow(windowname, image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
 
     @classmethod
     def splitImage(cls, image):
@@ -70,20 +71,22 @@ class ImageProcessing:
 
     @classmethod
     def getRegionColor(cls, region):
+        return random.choice(cls.findMaxColorInTally(cls.calculateColorTally(region)))
+
+    @classmethod
+    def calculateColorTally(cls,region):
         height, width = region.shape()
         colortally = dict()
-        colortally["BLANK"] = 0
-        colortally["WHITE"] = 0
-        colortally["RED"] = 0
-        colortally["ORANGE"] = 0
-        colortally["YELLOW"] = 0
-        colortally["GREEN"] = 0
-        colortally["BLUE"] = 0
-
+        colortally["BLANK"], colortally["WHITE"], colortally["RED"], colortally["ORANGE"],\
+            colortally["YELLOW"], colortally["GREEN"], colortally["BLUE"] = [0, 0, 0, 0, 0, 0, 0]
         for i in range(0, height):
             for j in range(0, width):
                 colortally[(cls.chooseColor(cls.calculateHue(region[i, j])))] += 1
-        max
+        return colortally
 
-
-
+    @classmethod
+    def findMaxColorInTally(cls,colortally):
+        maxval = max(colortally.values())
+        regioncolors = {}
+        regioncolors.append([key for key in colortally.keys() if colortally[key] == maxval])
+        return regioncolors

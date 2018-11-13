@@ -1,19 +1,19 @@
+import os
 import cv2
-
+import Cube_1
+import inspect
 class ImageIO:
 
     valid_types = [".jpg", ".gif", ".png", ".tga"]
-    path = "C:/Users/Ijeri/Documents/PycharmProjects/Rubix-Cube/Cube_1/Side "
+
     @classmethod
     def loadImages(cls, side, filetype):
         if cls.checkValidImageFormat(filetype):
-            cls.path += (side+filetype)
-            img = cv2.imread(cls.path, 1)
+
+            path = os.path.dirname(inspect.getfile(Cube_1)) + "/Side_" + side + filetype
+            img = cv2.imread(path, 1)
             if img is None:
                 print("File I/O Error")
-               # cv2.imshow("Cube Face",img)
-               # cv2.waitKey(0)
-                #cv2.destroyAllWindows()
             return img
         print("INVALID FILE TYPE")
 

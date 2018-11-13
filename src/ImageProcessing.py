@@ -1,59 +1,32 @@
 import numpy as np
 import cv2
 class ImageProcessing:
+
+
+
     @classmethod
-    def splitImage(cls,image):
-        imgRegions = dict()
-        height,width = np.size(image,0),np.size(image,1)
-       # print(height,width)
-        for i in range(0,3):
-            yupperbound = int((i+1) * (height / 3))
-            ylowerbound = int(yupperbound - (height / 3))
-            #print("YL: ", ylowerbound, "YU: ", yupperbound)
-            for j in range(0,3):
-                xupperbound = int((j+1)*(width/3))
-                xlowerbound = int(xupperbound-(width/3))
-                #print("XL: ", xlowerbound, "XU: ", xupperbound)
-                imgRegions[(i,j)] = image[ylowerbound:yupperbound,xlowerbound:xupperbound]
-        cv2.imshow("Cube Section",imgRegions.get((0,0)))
+    def displayImage(cls, windowname, image):
+        cv2.imshow(windowname, image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-        return imgRegions
 
     @classmethod
-    def isBlue(cls, colorstats):
-        b,g,r = colorstats
-        return (b > r) and (r == g) or (b == g) and (b > r) or (b > g) and (g > r) or (b > r) and (r > g)
-
-    @classmethod
-    def isGreen(cls, colorstats):
-        b,g,r = colorstats
-        return (g > r) and (r > b) and ((g - r) >= (.25 * r)) or (g > r) and (r == b) or (g > b) and (b > g)
-
-    @classmethod
-    def isRed(cls, colorstats):
-        b, g, r = colorstats
-        return (r > g) and (g == b) or (r > g) and (g > b) and ((g - b) < (.25*b)) or (r > b) and (b > g) or (r == b) and (b > g)
-
-    @classmethod
-    def isYellow(cls, colorstats): #not done
-        b, g, r = colorstats
-        return (g > r) and (r > b) and ((g - r) < (.25 * r)) or (g == r) and (r > b) or (r > g) and (g > b) and ((r - g) < (.25*g)) and ((g - b) >= (.25*b))
-
-    @classmethod
-    def isOrange(cls, colorstats):
-        b, g, r = colorstats
-        return (r > g) and (g > b) and ((r - g) >= (.25*g)) and ((g - b) >= (.25*b))
+    def splitImage(cls, image):
+        imgregions = dict()
+        height, width = np.size(image, 0), np.size(image, 1)
+        for i in range(0, 3):
+            yupperbound = int((i+1) * (height / 3))
+            ylowerbound = int(yupperbound - (height / 3))
+            for j in range(0, 3):
+                xupperbound = int((j + 1) * (width / 3))
+                xlowerbound = int(xupperbound-(width / 3))
+                imgregions[(i, j)] = image[ylowerbound:yupperbound, xlowerbound:xupperbound]
+        return imgregions
 
     @classmethod
     def isWhite(cls, colorstats): #not done
         b, g, r = colorstats
         return (((r-g) <= (.05*g)) and ((r-b) <= (.05*b)) and ((b-g) <= (.05*g))) and (r+b+g) >= 550
-
-    @classmethod
-    def calulatecolorstats(cls, color):
-        sum = color[0] + color[1] + color[2]
-        return color[0] / sum, color[1] / sum, color[2] / sum
 
     @classmethod
     def calculateHue(cls, pixel):
@@ -77,9 +50,9 @@ class ImageProcessing:
         return hue
 
     @classmethod
-    def chooseColor(cls,hue):
+    def chooseColor(cls, hue):
         if hue is None:
-            return "BlANK"
+            return "BLANK"
         elif hue == -1:
             return "WHITE"
         elif hue >= 320 or hue <= 10:
@@ -95,6 +68,22 @@ class ImageProcessing:
         else:
             return "BlANK"
 
+    @classmethod
+    def getRegionColor(cls, region):
+        height, width = region.shape()
+        colortally = dict()
+        colortally["BLANK"] = 0
+        colortally["WHITE"] = 0
+        colortally["RED"] = 0
+        colortally["ORANGE"] = 0
+        colortally["YELLOW"] = 0
+        colortally["GREEN"] = 0
+        colortally["BLUE"] = 0
+
+        for i in range(0, height):
+            for j in range(0, width):
+                colortally[(cls.chooseColor(cls.calculateHue(region[i, j])))] += 1
+        max
 
 
 

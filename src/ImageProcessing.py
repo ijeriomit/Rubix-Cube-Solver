@@ -12,7 +12,7 @@ def displayImage(windowname, image):
 class ImageProcessing:
 
     @classmethod
-    def splitImage(cls, image):
+    def splitImageIntoRegions(cls, image):
         imgregions = dict()
         height, width = np.size(image, 0), np.size(image, 1)
         for i in range(0, 3):
@@ -25,7 +25,11 @@ class ImageProcessing:
         return imgregions
 
     @classmethod
-    def isWhite(cls, colorstats): #not done
+    def getRegionColor(cls, region):
+        return random.choice(cls.findMaxColorInTally(cls.calculateColorTally(region)))
+
+    @classmethod
+    def isWhite(cls, colorstats):
         b, g, r = colorstats
         return (((r-g) <= (.05*g)) and ((r-b) <= (.05*b)) and ((b-g) <= (.05*g))) and (r+b+g) >= 550
 
@@ -69,9 +73,7 @@ class ImageProcessing:
         else:
             return "BlANK"
 
-    @classmethod
-    def getRegionColor(cls, region):
-        return random.choice(cls.findMaxColorInTally(cls.calculateColorTally(region)))
+
 
     @classmethod
     def calculateColorTally(cls,region):

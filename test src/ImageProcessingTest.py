@@ -7,10 +7,10 @@ from ImageProcessing import ImageProcessing as imgPro
 class MyTestCase(unittest.TestCase):
 
     def test_splitsimageinto9regions (self):
-        self.assertEqual(len(imgPro.splitImage(ImageIO.loadImages("7", ".jpg"))), 9)
+        self.assertEqual(len(imgPro.splitImageIntoRegions(ImageIO.loadImages("7", ".jpg"))), 9)
 
     def test_noduplicateregions(self):
-        imgregions = imgPro.splitImage(ImageIO.loadImages("1", ".jpg")).values()
+        imgregions = imgPro.splitImageIntoRegions(ImageIO.loadImages("1", ".jpg")).values()
         seen = list()
         for x in imgregions:
             for i in seen:

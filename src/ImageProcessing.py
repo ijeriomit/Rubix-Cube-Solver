@@ -24,9 +24,6 @@ class ImageProcessing:
                 imgregions[(i, j)] = image[ylowerbound:yupperbound, xlowerbound:xupperbound]
         return imgregions
 
-    @classmethod
-    def getRegionColor(cls, region):
-        return random.choice(cls.findMaxColorInTally(cls.calculateColorTally(region)))
 
     @classmethod
     def isWhite(cls, colorstats):
@@ -73,22 +70,3 @@ class ImageProcessing:
         else:
             return "BlANK"
 
-
-
-    @classmethod
-    def calculateColorTally(cls,region):
-        height, width = region.shape()
-        colortally = dict()
-        colortally["BLANK"], colortally["WHITE"], colortally["RED"], colortally["ORANGE"],\
-            colortally["YELLOW"], colortally["GREEN"], colortally["BLUE"] = [0, 0, 0, 0, 0, 0, 0]
-        for i in range(0, height):
-            for j in range(0, width):
-                colortally[(cls.chooseColor(cls.calculateHue(region[i, j])))] += 1
-        return colortally
-
-    @classmethod
-    def findMaxColorInTally(cls,colortally):
-        maxval = max(colortally.values())
-        regioncolors = {}
-        regioncolors.append([key for key in colortally.keys() if colortally[key] == maxval])
-        return regioncolors

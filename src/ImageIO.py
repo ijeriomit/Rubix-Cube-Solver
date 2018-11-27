@@ -1,28 +1,42 @@
+import errno
 import os
 import cv2
-import Cube_1
+from Cube import Cube_1
 import inspect
+
+
 class ImageIO:
 
-    valid_types = [".jpg", ".gif", ".png", ".tga"]
+    valid_types = [".jpg", ".png", ".tga"]
+    max_num_images = 6
 
-    @classmethod
-    def loadImages(cls, side, filetype):
-        if cls.checkValidImageFormat(filetype):
+    def __init__(self, filetype=".jpg"):
+        self.images = [None for i in range(0, self.max_num_images)]
+        self.filetype = filetype
 
-            path = os.path.dirname(inspect.getfile(Cube_1)) + "/Side_" + side + filetype
-            img = cv2.imread(path, 1)
-            if img is None:
-                print("File I/O Error")
-            return img
-        print("INVALID FILE TYPE")
+    def loadImage(self, face, filetype):
+        self.checkValidImageFormat(filetype)
+        path = os.path.dirname(inspect.getfile(Cube_1 )) + "/Face_" + face + filetype
+        self.checkValidPath(path)
+        img = cv2.imread(path, 1)
+        return img
 
-    @classmethod
-    def checkValidImageFormat(cls,filetype):
+    def saveImages(self):
+        for i in range(0, self.max_num_images):
+            self.images[i] = self.loadImage(str(i + 1), self.filetype)
+        return self.images
 
-        if filetype in cls.valid_types:
-            return True
-        return False
+    def setFileType(self, filetype):
+        self.filetype = filetype
+
+    def checkValidPath(self, path):
+        if not os.path.isfile(path):
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), path)
+
+    def checkValidImageFormat(self, filetype):
+        if filetype not in self.valid_types:
+            raise FileNotFoundError
+
 
 
 

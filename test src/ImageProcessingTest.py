@@ -10,6 +10,10 @@ class MyTestCase(unittest.TestCase):
         self.imageIO = ImageIO()
         self.imgPro = ImageProcessing()
 
+    def test_saveImageCells(self):
+        self.imgPro.saveCells(self.imageIO.loadImage("4", ".jpg"))
+        self.assertEqual(len(self.imgPro.imageCells), 9)
+
     def test_splitsimageinto9regions(self):
         self.assertEqual(len(self.imgPro.splitImage(self.imageIO.loadImage("3", ".jpg"))), 9)
 

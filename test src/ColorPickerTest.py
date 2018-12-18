@@ -2,6 +2,7 @@
 import unittest
 from ColorPicker import PickColor
 
+
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -25,7 +26,7 @@ class MyTestCase(unittest.TestCase):
     def test_coloriswhite(self):
         self.assertEqual("WHITE", self.pickColor.chooseColor(self.pickColor.calculateHue((245, 250, 255))))
 
-    def test_blackcolor(self):
+    def test_blankcolor(self):
         self.assertEqual("BLANK", self.pickColor.chooseColor(self.pickColor.calculateHue((0, 0, 0))))
 
     def test_greenishblueisblue(self):

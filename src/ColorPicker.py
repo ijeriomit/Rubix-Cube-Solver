@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class PickColor:
 
     def calculateColorinCell(self, cell):

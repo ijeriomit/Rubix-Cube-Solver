@@ -37,6 +37,19 @@ class MyTestCase(unittest.TestCase):
     def test_orangeishyellowisyellow(self):
         self.assertEqual("YELLOW", self.pickColor.chooseColor(self.pickColor.calculateHue((0, 198, 255))))
 
+    def test_iswhite(self):
+        self.assertEqual(True, self.pickColor.isWhite((245, 250, 255)))
+
+    def test_calculatecolorincell1(self):
+        impro = ImageProcessing()
+        imio = ImageIO()
+        self.assertEqual("RED", self.pickColor.calculateColorinCell(impro.splitImage(imio.loadImage("0", ".jpg")).get((0, 0))))
+
+    def test_calculatecolorincell2(self):
+        impro = ImageProcessing()
+        imio = ImageIO()
+        self.assertEqual("BLUE", self.pickColor.calculateColorinCell(impro.splitImage(imio.loadImage("1", ".jpg")).get((0, 0))))
+
 
 if __name__ == '__main__':
     unittest.main()

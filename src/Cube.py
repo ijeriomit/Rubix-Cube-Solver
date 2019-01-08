@@ -33,7 +33,7 @@ class Cube:
             Piece.Piece(Piece.SIDE, (1, 0, -1)),    # Middle-NorthEast
             Piece.Piece(Piece.SIDE, (1, 0, 1)),     # Middle-SouthEast
             Piece.Piece(Piece.SIDE, (-1, 0, -1)),   # Middle-NorthWest
-            Piece.Piece(Piece.SIDE, (-1, 0, 11)))   # Middle-SouthWest
+            Piece.Piece(Piece.SIDE, (-1, 0, 1)))   # Middle-SouthWest
 
         self.edges = (
             Piece.Piece(Piece.EDGE, (1, 1, 1)),     # Top-SouthEast
@@ -47,14 +47,23 @@ class Cube:
         self.pieces = self.sides + self.edges + self.centers
 
     def set_piece_colors(self, faces):
-        xpos, ypos, zpos = 1, 1, 1
         for i in range(0, 3):
             for j in range(0, 3):
-                self.get_piece((xpos-j, ypos, zpos-i)).set_color(faces[0][i][j], UP)
-        xpos, ypos, zpos = 1, -1, 1
-        for i in range(0, 3):
-            for j in range(0, 3):
-                self.get_piece((xpos-j, ypos-i, zpos-i)).set_color(faces[0][i][j], DOWN)
+                print((1-j, 1, 1-i))
+                print((1 - j, 1-i, 1))
+                print((1, 1-i, 1-j))
+                print((1 - j, 1-i, -1))
+                print((-1, 1 - i, 1-j), "Left")
+                print((1 - j, -1, 1-i))
+                print()
+                self.get_piece((1-j, 1, 1-i)).set_color(faces[0][i][j], UP)
+                self.get_piece((1 - j, 1-i, 1)).set_color(faces[1][i][j], FRONT)
+                self.get_piece((1, 1-i, 1-j)).set_color(faces[2][i][j], RIGHT)
+                self.get_piece((1 - j, 1-i, -1)).set_color(faces[3][i][j], BACK)
+                self.get_piece((-1, 1 - i, 1-j)).set_color(faces[4][i][j], LEFT)
+                self.get_piece((1 - j, -1, 1-i)).set_color(faces[5][i][j], DOWN)
+
+
 
 
 

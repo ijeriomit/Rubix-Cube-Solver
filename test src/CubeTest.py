@@ -20,7 +20,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_setpiececolors(self):
         self.cube.set_piece_colors(self.cf.cubematrix)
-        print(self.cube.get_piece((0, 1, 1)).piececolors)
+        #print(self.cube.get_piece((0, 1, 1)).piececolors)
 
 
 if __name__ == '__main__':

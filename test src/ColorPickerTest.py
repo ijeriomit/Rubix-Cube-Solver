@@ -48,7 +48,7 @@ class MyTestCase(unittest.TestCase):
     def test_calculatecolorincell2(self):
         impro = ImageProcessing()
         imio = ImageIO()
-        self.assertEqual("BLUE", self.pickColor.calculateColorinCell(impro.splitImage(imio.loadImage("1", ".jpg")).get((0, 0))))
+        self.assertEqual("GREEN", self.pickColor.calculateColorinCell(impro.splitImage(imio.loadImage("1", ".jpg")).get((0, 0))))
 
 
 if __name__ == '__main__':

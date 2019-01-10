@@ -2,6 +2,7 @@ import unittest
 from Cube import Cube
 import Piece
 from CubeFaces import CubeFaces
+import ColorPicker as cp
 
 
 
@@ -20,7 +21,14 @@ class MyTestCase(unittest.TestCase):
 
     def test_setpiececolors(self):
         self.cube.set_piece_colors(self.cf.cubematrix)
-        #print(self.cube.get_piece((0, 1, 1)).piececolors)
+        for piece in self.cube.pieces:
+            self.assertNotIn(None, piece.colors)
+
+    def test_setpieccolorswithedges(self):
+        self.cube.set_piece_colors(self.cf.cubematrix)
+        self.assertIn((cp.WHITE, "UP"), self.cube.edges[0].colors)
+        self.assertIn((cp.GREEN, "RIGHT"), self.cube.edges[0].colors)
+        self.assertIn((cp.ORANGE, "FRONT"), self.cube.edges[0].colors)
 
 
 if __name__ == '__main__':

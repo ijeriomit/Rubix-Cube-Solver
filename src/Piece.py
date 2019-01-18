@@ -17,7 +17,6 @@ class CircularLinkedList:
         self.push(third)
         self.push(last)
 
-
     # Function to insert a node at the beginning of a
     # circular linked list
     def push(self, data):
@@ -28,15 +27,22 @@ class CircularLinkedList:
 
         # If linked list is not None then set the next of
         # last node
-        if self.head is not None:
+        if self.head is None:
+            ptr1.next = ptr1
+            self.head = ptr1
+        else:
             while temp.next != self.head:
                 temp = temp.next
             temp.next = ptr1
 
-        else:
-            ptr1.next = ptr1  # For the first node
-
-        self.head = ptr1
+    def findNext(self, val):
+        temp = self.head
+        while True:
+            if temp.data == val:
+                return temp.next.data
+            temp = temp.next
+            if temp == self.head:
+                break
 
 
 FRONT = "FRONT"
@@ -53,18 +59,24 @@ class Piece:
     SIDE = "side"
     EDGE = "edge"
 
-    U_directions = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
-    Ui_directions = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)
-    D_directions = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)
-    Di_directions = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
-    L_directions = CircularLinkedList(UP, FRONT, DOWN, BACK)
-    Li_directions = CircularLinkedList(UP, BACK, DOWN, FRONT)
-    R_directions = CircularLinkedList(UP, BACK, DOWN, FRONT)
-    Ri_directions = CircularLinkedList(UP, FRONT, DOWN, BACK)
-    F_directions = CircularLinkedList(UP, RIGHT, DOWN, LEFT)
-    Fi_directions = CircularLinkedList(UP, LEFT, DOWN, RIGHT)
-    B_directions = CircularLinkedList(UP, LEFT, DOWN, RIGHT)
-    Bi_directions = CircularLinkedList(UP, RIGHT, DOWN, LEFT)
+    U_rotation = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
+    Ui_rotation = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)
+    D_rotation = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)
+    Di_rotation = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
+    L_rotation = CircularLinkedList(UP, FRONT, DOWN, BACK)
+    Li_rotation = CircularLinkedList(UP, BACK, DOWN, FRONT)
+    R_rotation = CircularLinkedList(UP, BACK, DOWN, FRONT)
+    Ri_rotation = CircularLinkedList(UP, FRONT, DOWN, BACK)
+    F_rotation = CircularLinkedList(UP, RIGHT, DOWN, LEFT)
+    Fi_rotation = CircularLinkedList(UP, LEFT, DOWN, RIGHT)
+    B_rotation = CircularLinkedList(UP, LEFT, DOWN, RIGHT)
+    Bi_rotation = CircularLinkedList(UP, RIGHT, DOWN, LEFT)
+    M_rotation = CircularLinkedList(UP, FRONT, DOWN, BACK)
+    Mi_rotation = CircularLinkedList(UP, BACK, DOWN, FRONT)
+    E_rotation = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)
+    Ei_rotation = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
+    S_rotation = CircularLinkedList(UP, RIGHT, DOWN, LEFT)
+    Si_rotation = CircularLinkedList(UP, LEFT, DOWN, RIGHT)
 
     def __init__(self, piecetype, pos):
         self.pos = pos
@@ -98,17 +110,57 @@ class Piece:
     def all_colors_are_set(self):
        return len(self.colors.items()) == self.numofsides
 
-    def rotate(self, rotmatrix):
+    def rotate(self, rotmatrix, rotationname):
         newpos = []
         for i in range(0, 3):
-            newpos.append(self.vector_multiplication(self.pos, rotmatrix[i]))
+            newpos.append(self.vector_matrix_multiplication(self.pos, rotmatrix[i]))
+        self.shift_piece_directions(rotationname)
         return newpos[0], newpos[1], newpos[2]
 
-    def vector_multiplication(self, vector1, vector2):
-        sum = 0
-        for i in range(0, 3):
-            sum += vector1[i] * vector2[i]
-        return sum
+    def shift_piece_directions(self, rotationname):
+        for k, v in self.colors.items():
+            self.colors[k] = self.get_next_direction(rotationname, v)
+
+    def get_next_direction(self, rotationname, curr_direction):
+        if rotationname == "U":
+            return self.U_rotation.findNext(curr_direction)
+        elif rotationname == "Ui":
+            return self.Ui_rotation.findNext(curr_direction)
+        elif rotationname == "D":
+            return self.D_rotation.findNext(curr_direction)
+        elif rotationname == "Di":
+            return self.Di_rotation.findNext(curr_direction)
+        elif rotationname == "L":
+            return self.L_rotation.findNext(curr_direction)
+        elif rotationname == "Li":
+            return self.Li_rotation.findNext(curr_direction)
+        elif rotationname == "R":
+            return self.R_rotation.findNext(curr_direction)
+        elif rotationname == "Ri":
+            return self.Ri_rotation.findNext(curr_direction)
+        elif rotationname == "F":
+            return self.F_rotation.findNext(curr_direction)
+        elif rotationname == "Fi":
+            return self.Fi_rotation.findNext(curr_direction)
+        elif rotationname == "B":
+            return self.B_rotation.findNext(curr_direction)
+        elif rotationname == "Bi":
+            return self.Bi_rotation.findNext(curr_direction)
+        elif rotationname == "M":
+            return self.M_rotation.findNext(curr_direction)
+        elif rotationname == "Mi":
+            return self.Mi_rotation.findNext(curr_direction)
+        elif rotationname == "E":
+            return self.E_rotation.findNext(curr_direction)
+        elif rotationname == "Ei":
+            return self.Ei_rotation.findNext(curr_direction)
+        elif rotationname == "S":
+            return self.S_rotation.findNext(curr_direction)
+        elif rotationname == "Si":
+            return self.Si_rotation.findNext(curr_direction)
+
+    def vector_matrix_multiplication(self, vector, matrixcol):
+        return vector[0] * matrixcol[0] + vector[1] * matrixcol[1] + vector[2] * matrixcol[2]
 
 
 

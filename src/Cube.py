@@ -1,11 +1,36 @@
 import Piece
-
 import CubeFaces
 
 
+ROT_XY_CW = [[0, 1, 0],
+             [-1, 0, 0],
+             [0, 0, 1]]
+
+ROT_XY_CC = [[0, -1, 0],
+             [1, 0, 0],
+             [0, 0, 1]]
+
+# 90 degree rotations in the XZ plane (around the y-axis when viewed pointing toward you).
+ROT_XZ_CW = [[0, 0, -1],
+             [0, 1, 0],
+             [1, 0, 0]]
+
+ROT_XZ_CC = [[0, 0, 1],
+             [0, 1, 0],
+             [-1, 0, 0]]
+
+# 90 degree rotations in the YZ plane (around the x-axis when viewed pointing toward you).
+ROT_YZ_CW = [[1, 0, 0],
+             [0, 0, 1],
+             [0, -1, 0]]
+
+ROT_YZ_CC = [[1, 0, 0],
+             [0, 0, -1],
+             [0, 1, 0]]
 
 
 class Cube:
+
 
     def __init__(self, faces):
         self.centers = (
@@ -55,3 +80,11 @@ class Cube:
         for piece in self.pieces:
             if piece.pos == position:
                 return piece
+
+    def get_pieces_by_xpos(self, x):
+        newlist = list()
+        for piece in self.pieces:
+            if piece.pos[0] == x:
+                newlist.append(piece)
+        return newlist
+

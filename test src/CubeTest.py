@@ -30,6 +30,9 @@ class MyTestCase(unittest.TestCase):
         self.assertIn((cp.GREEN, "RIGHT"), self.cube.edges[0].colors)
         self.assertIn((cp.ORANGE, "FRONT"), self.cube.edges[0].colors)
 
+    def test_get_pieces_by_xpos(self):
+        self.assertEqual(9, len(self.cube.get_pieces_by_xpos(1)))
+
 
 if __name__ == '__main__':
     unittest.main()

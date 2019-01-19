@@ -30,7 +30,26 @@ ROT_YZ_CC = [[1, 0, 0],
 
 
 class Cube:
+    R = ("x", 1, ROT_YZ_CW, "R")
+    Ri = ("x", 1, ROT_YZ_CC, "Ri")
+    M = ("x", 0, ROT_YZ_CC, "M")
+    Mi = ("x", 0, ROT_YZ_CW, "Mi")
+    L = ("x", -1, ROT_YZ_CC, "L")
+    Li = ("x", -1, ROT_YZ_CW, "Li")
 
+    U = ("y", 1, ROT_XZ_CW, "U")
+    Ui = ("y", 1, ROT_XZ_CC, "Ui")
+    E = ("y", 0, ROT_XZ_CC, "E")
+    Ei = ("y", 0, ROT_XZ_CW, "Ei")
+    D = ("y", -1, ROT_XZ_CC, "D")
+    Di = ("y", -1, ROT_XZ_CW, "Di")
+
+    F = ("z", 1, ROT_XY_CW, "F")
+    Fi = ("z", 1, ROT_XY_CC, "Fi")
+    S = ("z", 0, ROT_XY_CW, "S")
+    Si = ("z", 0, ROT_XY_CC, "Si")
+    B = ("z", -1, ROT_XY_CC, "B")
+    Bi = ("z", -1, ROT_XY_CW, "Bi")
 
     def __init__(self, faces):
         self.centers = (
@@ -64,7 +83,8 @@ class Cube:
             Piece.Piece(Piece.Piece.EDGE, (-1, -1, 1)),   # Bottom-SouthWest
             Piece.Piece(Piece.Piece.EDGE, (1, -1, -1)),   # Bottom-NorthEast
             Piece.Piece(Piece.Piece.EDGE, (-1, -1, -1)))  # Bottom-NorthWest
-        self.pieces = self.sides + self.edges + self.centers
+        self.cubepieces = self.sides + self.edges + self.centers
+        self.set_piece_colors(faces)
 
     def set_piece_colors(self, faces):
         for i in range(0, 3):
@@ -77,14 +97,52 @@ class Cube:
                 self.get_piece((-1+j, -1, -1+i)).set_color(faces[5][i][j], Piece.DOWN)
 
     def get_piece(self, position):
-        for piece in self.pieces:
+        for piece in self.cubepieces:
             if piece.pos == position:
                 return piece
 
-    def get_pieces_by_xpos(self, x):
+    def get_face_by_xpos(self, x):
         newlist = list()
-        for piece in self.pieces:
+        for piece in self.cubepieces:
             if piece.pos[0] == x:
                 newlist.append(piece)
         return newlist
+
+    def get_face_by_ypos(self, y):
+        newlist = list()
+        for piece in self.cubepieces:
+            if piece.pos[1] == y:
+                newlist.append(piece)
+        return newlist
+
+    def get_face_by_zpos(self, z):
+        newlist = list()
+        for piece in self.cubepieces:
+            if piece.pos[2] == z:
+                newlist.append(piece)
+        return newlist
+
+    def rotate_face(self, rotation):
+        face = None
+        if rotation[0] == "x":
+            face = self.get_face_by_xpos(rotation[1])
+        elif rotation[0] == "y":
+            face = self.get_face_by_ypos(rotation[1])
+        elif rotation[0] == "z":
+            face = self.get_face_by_zpos(rotation[1])
+        for piece in face:
+            piece.rotate(rotation[2], rotation[3])
+
+
+
+
+
+
+
+
+
+
+
+
+
 

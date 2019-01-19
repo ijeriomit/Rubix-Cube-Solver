@@ -45,19 +45,12 @@ class CircularLinkedList:
                 break
 
 
-FRONT = "FRONT"
-BACK = "BACK"
-UP = "UP"
-DOWN = "DOWN"
-RIGHT = "RIGHT"
-LEFT = "LEFT"
+FRONT, BACK, UP, DOWN, RIGHT, LEFT = "FRONT", "BACK", "UP", "DOWN", "RIGHT", "LEFT"
 
 
 class Piece:
 
-    CENTER = "center"
-    SIDE = "side"
-    EDGE = "edge"
+    CENTER, SIDE, EDGE = "center", "side", "edge"
 
     U_rotation = CircularLinkedList(FRONT, LEFT, BACK, RIGHT)
     Ui_rotation = CircularLinkedList(FRONT, RIGHT, BACK, LEFT)

@@ -1,5 +1,4 @@
 import Piece
-import CubeFaces
 
 
 ROT_XY_CW = [[0, 1, 0],
@@ -30,26 +29,6 @@ ROT_YZ_CC = [[1, 0, 0],
 
 
 class Cube:
-    R = ("x", 1, ROT_YZ_CW, "R")
-    Ri = ("x", 1, ROT_YZ_CC, "Ri")
-    M = ("x", 0, ROT_YZ_CC, "M")
-    Mi = ("x", 0, ROT_YZ_CW, "Mi")
-    L = ("x", -1, ROT_YZ_CC, "L")
-    Li = ("x", -1, ROT_YZ_CW, "Li")
-
-    U = ("y", 1, ROT_XZ_CW, "U")
-    Ui = ("y", 1, ROT_XZ_CC, "Ui")
-    E = ("y", 0, ROT_XZ_CC, "E")
-    Ei = ("y", 0, ROT_XZ_CW, "Ei")
-    D = ("y", -1, ROT_XZ_CC, "D")
-    Di = ("y", -1, ROT_XZ_CW, "Di")
-
-    F = ("z", 1, ROT_XY_CW, "F")
-    Fi = ("z", 1, ROT_XY_CC, "Fi")
-    S = ("z", 0, ROT_XY_CW, "S")
-    Si = ("z", 0, ROT_XY_CC, "Si")
-    B = ("z", -1, ROT_XY_CC, "B")
-    Bi = ("z", -1, ROT_XY_CW, "Bi")
 
     def __init__(self, faces):
         self.centers = (
@@ -122,16 +101,72 @@ class Cube:
                 newlist.append(piece)
         return newlist
 
-    def rotate_face(self, rotation):
+    def rotate_face(self, axis, pos, rotation, name):
         face = None
-        if rotation[0] == "x":
-            face = self.get_face_by_xpos(rotation[1])
-        elif rotation[0] == "y":
-            face = self.get_face_by_ypos(rotation[1])
-        elif rotation[0] == "z":
-            face = self.get_face_by_zpos(rotation[1])
+        if axis == "x":
+            face = self.get_face_by_xpos(pos)
+        elif axis == "y":
+            face = self.get_face_by_ypos(pos)
+        elif axis == "z":
+            face = self.get_face_by_zpos(pos)
         for piece in face:
-            piece.rotate(rotation[2], rotation[3])
+            piece.rotate(rotation, name)
+        return face
+
+    def R(self):
+        return self.rotate_face("x", 1, ROT_YZ_CW, "R")
+
+    def Ri(self):
+        return self.rotate_face("x", 1, ROT_YZ_CC, "Ri")
+
+    def M(self):
+        return self.rotate_face("x", 0, ROT_YZ_CC, "M")
+
+    def Mi(self):
+        return self.rotate_face("x", 0, ROT_YZ_CW, "Mi")
+
+    def L(self):
+        return self.rotate_face("x", -1, ROT_YZ_CC, "L")
+
+    def Li(self):
+        return self.rotate_face("x", -1, ROT_YZ_CW, "Li")
+
+    def U(self):
+        return self.rotate_face("y", 1, ROT_XZ_CW, "U")
+
+    def Ui(self):
+        return self.rotate_face("y", 1, ROT_XZ_CC, "Ui")
+
+    def E(self):
+        return self.rotate_face("y", 0, ROT_XZ_CC, "E")
+
+    def Ei(self):
+        return self.rotate_face("y", 0, ROT_XZ_CW, "Ei")
+
+    def D(self):
+        return self.rotate_face("y", -1, ROT_XZ_CC, "D")
+
+    def Di(self):
+        return self.rotate_face("y", -1, ROT_XZ_CW, "Di")
+
+    def F(self):
+        return self.rotate_face("z", 1, ROT_XY_CW, "F")
+
+    def Fi(self):
+        return self.rotate_face("z", 1, ROT_XY_CC, "Fi")
+
+    def S(self):
+        return self.rotate_face("z", 0, ROT_XY_CW, "S")
+
+    def Si(self):
+        return self.rotate_face("z", 0, ROT_XY_CC, "Si")
+
+    def B(self):
+        return self.rotate_face("z", -1, ROT_XY_CC, "B")
+
+    def Bi(self):
+        return self.rotate_face("z", -1, ROT_XY_CW, "Bi")
+
 
 
 

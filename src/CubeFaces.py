@@ -1,5 +1,7 @@
 from ImageIO import ImageIO
 from ColorCells import ColorCells
+from ImageProcessing import ImageProcessing
+from ColorPicker import PickColor
 
 class CubeFaces:
 

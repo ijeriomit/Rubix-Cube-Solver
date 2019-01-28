@@ -10,8 +10,8 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.cf = CubeFaces()
-        self.cf.FillCubeMatrix()
-        self.cube = Cube.Cube(self.cf.cubematrix)
+        self.cf.init_all_faces()
+        self.cube = Cube.Cube(self.cf.faces)
 
     def test_getpiece(self):
         self.assertEqual(3, self.cube.get_piece((1, 1, 1)).numofsides)

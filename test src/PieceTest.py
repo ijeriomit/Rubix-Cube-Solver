@@ -29,7 +29,6 @@ class MyTestCase(unittest.TestCase):
         self.piece.set_color(cp.RED, Piece.FRONT)
         self.piece.set_color(cp.GREEN, Piece.BACK)
         self.assertEqual(1, len(self.piece.colors.items()))
-        #self.assertEqual(Piece.FRONT, self.piece.colors.get(cp.RED))
 
     def test_setcolorsthricewithsidepiece(self):
         self.piece = Piece.Piece(Piece.Piece.SIDE, (0, 1, 1))
@@ -37,7 +36,6 @@ class MyTestCase(unittest.TestCase):
         self.piece.set_color(cp.GREEN, Piece.BACK)
         self.piece.set_color(cp.BLUE, Piece.UP)
         self.assertEqual(2, len(self.piece.colors.items()))
-        #self.assertEqual(Piece.FRONT, self.piece.colors.get(cp.RED))
 
     def test_setcolorstoomanycolorswithedgepiece(self):
         self.piece = Piece.Piece(Piece.Piece.EDGE, (1, 1, 1))

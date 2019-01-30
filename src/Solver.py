@@ -1,27 +1,39 @@
 from CubeFaces import CubeFaces
 import Cube
+from Images import Cube_1
 
-FRONT, BACK, UP, DOWN, RIGHT, LEFT = "FRONT", "BACK", "UP", "DOWN", "RIGHT", "LEFT"
+
+UP, FRONT, RIGHT, BACK, LEFT, DOWN = 0, 1, 2, 3, 4, 5
+
+class Grid:
+
+    # Constructor to create  a new node
+    def __init__(self, name, color, pos):
+        self.colorgrid = color
+        self.colorposgrid = pos
+        self.FaceName = name
 
 
 class Solver:
 
+    pos_grid = list()
+    pos_grid.append([[(-1 + j, 1, -1 + i) for j in range(3)] for i in range(3)])
+    pos_grid.append([[(-1 + j, 1 - i, 1) for j in range(3)] for i in range(3)])
+    pos_grid.append([[(1, 1 - i, 1 - j) for j in range(3)] for i in range(3)])
+    pos_grid.append([[(1 - j, 1 - i, -1) for j in range(3)] for i in range(3)])
+    pos_grid.append([[(-1, 1 - i, -1 + j) for j in range(3)] for i in range(3)])
+    pos_grid.append([[(-1 + j, -1, -1 + i) for j in range(3)] for i in range(3)])
+
     def __init__(self):
-        cubeface = CubeFaces()
+        cubeface = CubeFaces(Cube_1)
         cubeface.init_all_faces()
         self.cube = Cube.Cube(cubeface.faces)
-        self.Upface = cubeface.faces[0]
-        self.Frontface = cubeface.faces[1]
-        self.Rightface = cubeface.faces[2]
-        self.Backface = cubeface.faces[3]
-        self.Leftface = cubeface.faces[4]
-        self.Downface = cubeface.faces[5]
-        self.graph = {UP: [FRONT, LEFT, RIGHT, BACK],
-                      FRONT: [RIGHT, LEFT, UP, DOWN],
-                      RIGHT: [FRONT, BACK, UP, DOWN],
-                      BACK: [RIGHT, LEFT, UP, DOWN],
-                      LEFT: [FRONT, BACK, UP, DOWN],
-                      DOWN: [FRONT, LEFT, RIGHT, BACK]}
+        self.grids = [Grid("UP", cubeface.faces[UP], self.pos_grid[UP]),
+                      Grid("FRONT", cubeface.faces[FRONT], self.pos_grid[FRONT]),
+                      Grid("RIGHT", cubeface.faces[RIGHT], self.pos_grid[RIGHT]),
+                      Grid("BACK", cubeface.faces[BACK], self.pos_grid[BACK]),
+                      Grid("LEFT", cubeface.faces[LEFT], self.pos_grid[LEFT]),
+                      Grid("DOWN", cubeface.faces[DOWN], self.pos_grid[DOWN])]
 
     def is_face_solved(self, face):
         if (len(set(face[0])) == 1)\
@@ -31,12 +43,12 @@ class Solver:
         return False
 
     def is_cube_solved(self):
-        if (self.is_face_solved(self.Upface) is True) & \
-                (self.is_face_solved(self.Frontface) is True) & \
-                (self.is_face_solved(self.Rightface) is True) & \
-                (self.is_face_solved(self.Backface) is True) & \
-                (self.is_face_solved(self.Leftface) is True) & \
-                (self.is_face_solved(self.Downface) is True):
+        if (self.is_face_solved(self.grids[UP].colorgrid) is True) & \
+                (self.is_face_solved(self.grids[FRONT].colorgrid) is True) & \
+                (self.is_face_solved(self.grids[RIGHT].colorgrid) is True) & \
+                (self.is_face_solved(self.grids[BACK].colorgrid) is True) & \
+                (self.is_face_solved(self.grids[LEFT].colorgrid) is True) & \
+                (self.is_face_solved(self.grids[DOWN].colorgrid) is True):
             return True
         return False
 

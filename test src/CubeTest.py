@@ -4,12 +4,13 @@ from CubeFaces import CubeFaces
 import ColorPicker as cp
 import Piece
 from collections import Counter
+from Images import Cube_1
 
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cf = CubeFaces()
+        self.cf = CubeFaces(Cube_1)
         self.cf.init_all_faces()
         self.cube = Cube.Cube(self.cf.faces)
 

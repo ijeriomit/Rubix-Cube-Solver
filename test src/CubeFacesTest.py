@@ -44,38 +44,75 @@ class MyTestCase(unittest.TestCase):
         newface = self.cubeface.init_face_color(self.cubeface.images[0], self.cubeface.faces[0])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "WHITE")
+                self.assertEqual(newface[i][j], "W")
 
     def test_saveColorCellsFace_1(self):
         newface = self.cubeface.init_face_color(self.cubeface.images[1], self.cubeface.faces[1])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "ORANGE")
+                self.assertEqual(newface[i][j], "O")
 
     def test_saveColorCellsFace_2(self):
         newface = self.cubeface.init_face_color(self.cubeface.images[2], self.cubeface.faces[2])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "GREEN")
+                self.assertEqual(newface[i][j], "G")
 
     def test_saveColorCellsFace_3(self):
         newface = self.cubeface.init_face_color(self.cubeface.images[3], self.cubeface.faces[3])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "RED")
+                self.assertEqual(newface[i][j], "R")
 
     def test_saveColorCellsFace_4(self):
         newface = self.cubeface.init_face_color(self.cubeface.images[4], self.cubeface.faces[4])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "BLUE")
+                self.assertEqual(newface[i][j], "B")
 
     def test_saveColorCellsFace_5(self):
         newface = self.cubeface.init_face_color(self.cubeface.images[5], self.cubeface.faces[5])
         for i in range(0, 3):
             for j in range(0, 3):
-                self.assertEqual(newface[i][j], "YELLOW")
+                self.assertEqual(newface[i][j], "Y")
 
+    def test_create_cube_string_1(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("WWWWWWWWW", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[0], self.cubeface.up_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_2(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("OOOOOOOOO", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[1], self.cubeface.front_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_3(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("GGGGGGGGG", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[2], self.cubeface.right_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_4(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("RRRRRRRRR", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[3], self.cubeface.back_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_5(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("BBBBBBBBB", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[4], self.cubeface.left_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_6(self):
+        self.cubeface.init_all_faces()
+        self.assertEqual("YYYYYYYYY", ''.join(
+            self.cubeface.create_string_from_face(self.cubeface.faces[5], self.cubeface.down_pos_matrix, self.cubeface.cube_str_list)))
+
+    def test_create_cube_string_all_values_equal_and_same(self):
+        self.cubeface.init_all_faces()
+        cubestr = self.cubeface.create_cube_string()
+        temp = [cubestr.count('R'), cubestr.count('O'), cubestr.count('G'),
+                cubestr.count('B'), cubestr.count('W'), cubestr.count('Y')]
+        self.assertEqual(1, len(set(temp)))
+        self.assertEqual(9, temp[0])
 
 if __name__ == '__main__':
     unittest.main()

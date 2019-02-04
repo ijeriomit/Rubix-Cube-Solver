@@ -58,6 +58,18 @@ class Solver:
             return True
         return False
 
+    def get_face_center_color(self, facename):
+        return self.grids[facename].colorgrid[1][1]
+
+    def get_face_center_pos(self, facename):
+        return self.grids[facename].colorposgrid[1][1]
+
+    def solve_first_cross(self):
+        center = self.cube.get_piece(self.grids[UP].colorposgrid[1][1])
+
+
+
+
 
 
 
